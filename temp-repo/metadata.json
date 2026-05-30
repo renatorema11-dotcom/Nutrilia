@@ -1,0 +1,10 @@
+{
+  "name": "Nutrilia",
+  "description": "Nutricionista virtual IA com planos alimentares, integração com vestíveis, chat com profissionais e assinatura premium.",
+  "requestFramePermissions": [
+    "microphone"
+  ],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

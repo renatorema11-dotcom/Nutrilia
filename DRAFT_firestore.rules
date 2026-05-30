@@ -1,0 +1,36 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Global Safety Net
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    function isSignedIn() { return request.auth != null; }
+    function isValidId(id) { return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$'); }
+    function incoming() { return request.resource.data; }
+    function existing() { return resource.data; }
+
+    function isValidProfile(data) {
+      return data.keys().hasAny(['name', 'email', 'isOnboarded', 'role']) &&
+             data.name is string && data.name.size() <= 100 &&
+             data.email is string && data.email.size() <= 200 &&
+             data.isOnboarded is bool &&
+             data.role in ['user', 'nutricionista'];
+    }
+
+    match /profiles/{userId} {
+      allow read: if isSignedIn() && request.auth.uid == userId;
+      
+      allow create: if isSignedIn() && isValidId(userId) && request.auth.uid == userId &&
+                    isValidProfile(incoming()) &&
+                    incoming().email == request.auth.token.email;
+      
+      allow update: if isSignedIn() && isValidId(userId) && request.auth.uid == userId &&
+                    isValidProfile(incoming()) &&
+                    // Never allow changing role or email on update
+                    incoming().role == existing().role &&
+                    incoming().email == existing().email;
+    }
+  }
+}

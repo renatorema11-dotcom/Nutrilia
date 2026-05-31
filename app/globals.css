@@ -32,6 +32,12 @@ body {
   background-color: var(--color-slate-50, #FCFBF9);
 }
 
+.glass-card {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(224, 239, 234, 0.6); /* emerald-100 */
+}
+
 .gradient-primary {
   background: linear-gradient(135deg, #4B8C7E 0%, #3A7064 100%);
 }

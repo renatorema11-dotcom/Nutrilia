@@ -27,38 +27,38 @@ export default function NutricionistaDashboardPage() {
       </div>
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+        <div className="glass-card p-4 rounded-2xl shadow-sm border-0 border-l-4 border-l-blue-500 bg-white">
           <div>
-            <p className="text-slate-400 text-xs font-bold mb-1 uppercase tracking-wider">Pacientes Ativos</p>
+            <p className="text-slate-500 text-xs font-semibold mb-1 uppercase tracking-wider">Pacientes Ativos</p>
             <div className="flex items-center justify-between">
-              <h3 className="text-3xl font-bold font-display text-slate-900">24</h3>
-              <div className="bg-blue-50 text-blue-600 p-2 rounded-lg flex items-center justify-center">
+              <h3 className="text-2xl font-bold font-display text-slate-900">24</h3>
+              <div className="bg-blue-100 text-blue-700 p-1.5 rounded-lg flex items-center justify-center">
                 <Users className="w-4 h-4" />
               </div>
             </div>
-            <p className="text-xs text-blue-600 mt-1 font-medium">+3 esta semana</p>
+            <p className="text-xs text-blue-600 mt-1">+3 esta semana</p>
           </div>
         </div>
         
-        <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+        <div className="glass-card p-4 rounded-2xl shadow-sm border-0 border-l-4 border-l-emerald-500 bg-white">
           <div>
-            <p className="text-slate-400 text-xs font-bold mb-1 uppercase tracking-wider">Consultas Hoje</p>
+            <p className="text-slate-500 text-xs font-semibold mb-1 uppercase tracking-wider">Consultas Hoje</p>
             <div className="flex items-center justify-between">
-              <h3 className="text-3xl font-bold font-display text-slate-900">4</h3>
-              <div className="bg-emerald-50 text-emerald-600 p-2 rounded-lg flex items-center justify-center">
+              <h3 className="text-2xl font-bold font-display text-slate-900">4</h3>
+              <div className="bg-emerald-100 text-emerald-700 p-1.5 rounded-lg flex items-center justify-center">
                 <CalendarDays className="w-4 h-4" />
               </div>
             </div>
-            <p className="text-xs text-emerald-600 mt-1 font-medium">Próxima às 14:00</p>
+            <p className="text-xs text-emerald-600 mt-1">Próxima às 14:00</p>
           </div>
         </div>
 
-        <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+        <div className="glass-card p-4 rounded-2xl shadow-sm border-0 border-l-4 border-l-orange-500 bg-white">
           <div>
-            <p className="text-slate-400 text-xs font-bold mb-1 uppercase tracking-wider">Dietas Atualizadas</p>
+            <p className="text-slate-500 text-xs font-semibold mb-1 uppercase tracking-wider">Dietas Atualizadas</p>
             <div className="flex items-center justify-between">
-              <h3 className="text-3xl font-bold font-display text-slate-900">18</h3>
-              <div className="bg-orange-50 text-orange-600 p-2 rounded-lg flex items-center justify-center">
+              <h3 className="text-2xl font-bold font-display text-slate-900">18</h3>
+              <div className="bg-orange-100 text-orange-700 p-1.5 rounded-lg flex items-center justify-center">
                 <FileText className="w-4 h-4" />
               </div>
             </div>
@@ -66,16 +66,16 @@ export default function NutricionistaDashboardPage() {
           </div>
         </div>
 
-        <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+        <div className="glass-card p-4 rounded-2xl shadow-sm border-0 border-l-4 border-l-purple-500 bg-white">
           <div>
-            <p className="text-slate-400 text-xs font-bold mb-1 uppercase tracking-wider">Mensagens</p>
+            <p className="text-slate-500 text-xs font-semibold mb-1 uppercase tracking-wider">Mensagens</p>
             <div className="flex items-center justify-between">
-              <h3 className="text-3xl font-bold font-display text-slate-900">5</h3>
-              <div className="bg-purple-50 text-purple-600 p-2 rounded-lg flex items-center justify-center">
+              <h3 className="text-2xl font-bold font-display text-slate-900">5</h3>
+              <div className="bg-purple-100 text-purple-700 p-1.5 rounded-lg flex items-center justify-center">
                 <MessageSquare className="w-4 h-4" />
               </div>
             </div>
-            <p className="text-xs text-purple-600 mt-1 font-medium">2 não lidas</p>
+            <p className="text-xs text-purple-600 mt-1">2 não lidas</p>
           </div>
         </div>
       </div>
@@ -83,8 +83,8 @@ export default function NutricionistaDashboardPage() {
       <div className="grid md:grid-cols-2 gap-6">
         <Card>
           <CardHeader>
-            <CardTitle className="text-xs font-bold uppercase tracking-wider text-slate-400">Próximas Consultas</CardTitle>
-            <CardDescription className="text-xs">Sua agenda para hoje e amanhã.</CardDescription>
+            <CardTitle>Próximas Consultas</CardTitle>
+            <CardDescription>Sua agenda para hoje e amanhã.</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
@@ -139,8 +139,8 @@ export default function NutricionistaDashboardPage() {
 
         <Card>
           <CardHeader>
-            <CardTitle className="text-xs font-bold uppercase tracking-wider text-slate-400">Atualizações Recentes de Pacientes</CardTitle>
-            <CardDescription className="text-xs">Progresso registrado pelos seus pacientes nos últimos dias.</CardDescription>
+            <CardTitle>Atualizações Recentes de Pacientes</CardTitle>
+            <CardDescription>Progresso registrado pelos seus pacientes nos últimos dias.</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">

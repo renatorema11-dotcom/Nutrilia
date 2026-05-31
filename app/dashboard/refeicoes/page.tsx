@@ -99,7 +99,7 @@ export default function MealsPage() {
                   toggleMeal(meal.id);
                 }
               }}
-              className={`transition-all transition-shadow outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 rounded-xl ${isRecorded ? 'border-emerald-500 bg-emerald-50/30 shadow-sm' : 'border-2 border-dashed border-slate-200 bg-slate-50 hover:border-emerald-300 cursor-pointer text-slate-400'}`}
+              className={`transition-all transition-shadow outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 ${isRecorded ? 'border-emerald-500 bg-emerald-50/30' : 'border-slate-200 hover:border-emerald-200 cursor-pointer'}`}
               onClick={() => toggleMeal(meal.id)}
             >
               <CardContent className="p-4 flex flex-col gap-4">

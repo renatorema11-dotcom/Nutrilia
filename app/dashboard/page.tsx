@@ -81,29 +81,29 @@ export default function DashboardPage() {
       </div>
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+        <div className="glass-card p-4 rounded-2xl shadow-sm border-0 border-l-4 border-l-orange-500 bg-white">
           <div>
-            <p className="text-slate-400 text-xs font-bold mb-1 uppercase tracking-wider">{t('dash.kcal')}</p>
-            <h3 className="text-3xl font-bold font-display text-slate-900">{isWatchConnected ? "1.850" : "0"}</h3>
-            <p className="text-xs text-slate-500 mt-1">Meta: 2.200</p>
+            <p className="text-slate-500 text-xs font-semibold mb-1 uppercase tracking-wider">{t('dash.kcal')}</p>
+            <h3 className="text-2xl font-bold font-display text-slate-900">{isWatchConnected ? "1.850" : "0"}</h3>
+            <p className="text-xs text-orange-600 mt-1">Meta: 2.200</p>
           </div>
         </div>
         
-        <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+        <div className="glass-card p-4 rounded-2xl shadow-sm border-0 border-l-4 border-l-blue-500 bg-white">
           <div>
-            <p className="text-slate-400 text-xs font-bold mb-1 uppercase tracking-wider">{t('dash.water')}</p>
-            <h3 className="text-3xl font-bold font-display text-slate-900">{isWatchConnected ? "2.1L" : "0L"}</h3>
-            <div className="w-full bg-slate-100 h-2 rounded-full mt-2">
+            <p className="text-slate-500 text-xs font-semibold mb-1 uppercase tracking-wider">{t('dash.water')}</p>
+            <h3 className="text-2xl font-bold font-display text-slate-900">{isWatchConnected ? "2.1L" : "0L"}</h3>
+            <div className="w-full bg-slate-100 h-1.5 rounded-full mt-2">
               <div className="bg-blue-500 h-full rounded-full transition-all duration-1000" style={{ width: isWatchConnected ? '70%' : '0%' }}></div>
             </div>
           </div>
         </div>
 
-        <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+        <div className="glass-card p-4 rounded-2xl shadow-sm border-0 border-l-4 border-l-emerald-500 bg-white">
           <div>
-            <p className="text-slate-400 text-xs font-bold mb-1 uppercase tracking-wider">{t('dash.steps')}</p>
-            <h3 className="text-3xl font-bold font-display text-slate-900">{isWatchConnected ? "6.540" : "0"}</h3>
-            <p className={`text-xs mt-1 ${isWatchConnected ? 'text-emerald-600 font-medium' : 'text-slate-400'}`}>
+            <p className="text-slate-500 text-xs font-semibold mb-1 uppercase tracking-wider">{t('dash.steps')}</p>
+            <h3 className="text-2xl font-bold font-display text-slate-900">{isWatchConnected ? "6.540" : "0"}</h3>
+            <p className={`text-xs mt-1 ${isWatchConnected ? 'text-emerald-600' : 'text-slate-400'}`}>
               {isWatchConnected ? "+12%" : "Sem dados"}
             </p>
           </div>
@@ -119,15 +119,15 @@ export default function DashboardPage() {
             }
           }}
           aria-label="Ver registro de refeições"
-          className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm cursor-pointer hover:border-emerald-300 hover:shadow-md hover:-translate-y-0.5 active:scale-95 transition-all outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
+          className="glass-card p-4 rounded-2xl shadow-sm border-0 border-l-4 border-l-purple-500 bg-white cursor-pointer hover:bg-slate-50 hover:shadow-md hover:-translate-y-0.5 active:scale-95 transition-all outline-none focus-visible:ring-2 focus-visible:ring-purple-500"
         >
           <div>
-            <p className="text-slate-400 text-xs font-bold mb-1 uppercase tracking-wider">{t('dash.meals')}</p>
+            <p className="text-slate-500 text-xs font-semibold mb-1 uppercase tracking-wider">{t('dash.meals')}</p>
             <div className="flex items-center justify-between">
-              <h3 className="text-3xl font-bold font-display text-slate-900">
+              <h3 className="text-2xl font-bold font-display text-slate-900">
                 {user?.recordedMeals ? user.recordedMeals.length : 0} / 5
               </h3>
-              <div className="bg-emerald-50 text-emerald-600 p-2 rounded-lg flex items-center justify-center" aria-hidden="true">
+              <div className="bg-purple-100 text-purple-700 p-1.5 rounded-lg flex items-center justify-center" aria-hidden="true">
                 <Utensils className="w-4 h-4" />
               </div>
             </div>
@@ -232,7 +232,7 @@ export default function DashboardPage() {
           <div className="grid sm:grid-cols-2 gap-6">
             <Card>
               <CardHeader className="pb-3">
-                <CardTitle className="text-xs font-bold uppercase tracking-wider text-slate-400">{t('dash.next.title') || "Próxima Refeição"}</CardTitle>
+                <CardTitle className="text-lg">{t('dash.next.title') || "Próxima Refeição"}</CardTitle>
               </CardHeader>
               <CardContent>
                 {nextMeal ? (
@@ -254,7 +254,7 @@ export default function DashboardPage() {
 
             <Card>
               <CardHeader className="pb-3">
-                <CardTitle className="text-xs font-bold uppercase tracking-wider text-slate-400">{t('dash.nutri.title')}</CardTitle>
+                <CardTitle className="text-lg">{t('dash.nutri.title')}</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="flex items-center gap-3">
@@ -274,7 +274,7 @@ export default function DashboardPage() {
         <div className="space-y-6">
           <Card>
             <CardHeader className="pb-3">
-              <CardTitle className="text-xs font-bold uppercase tracking-wider text-slate-400">{t('dash.cal.title')}</CardTitle>
+              <CardTitle className="text-lg">{t('dash.cal.title')}</CardTitle>
             </CardHeader>
             <CardContent className="flex justify-center pb-6">
               <Calendar
@@ -288,7 +288,7 @@ export default function DashboardPage() {
 
           <Card>
             <CardHeader className="pb-3">
-              <CardTitle className="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-2">
+              <CardTitle className="text-lg flex items-center gap-2">
                 <NotebookPen className="h-4 w-4" aria-hidden="true" />
                 {t('dash.notes.title')}
               </CardTitle>

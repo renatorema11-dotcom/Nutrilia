@@ -106,21 +106,16 @@ export default function DashboardLayout({
         </nav>
         
         <div className="p-4 mb-4 shrink-0">
-          <div className="bg-emerald-900 text-white rounded-xl p-6 relative overflow-hidden">
-            <div className="relative z-10">
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-[10px] font-bold premium-pill px-2 py-1 rounded-sm uppercase tracking-wider">Premium</span>
-              </div>
-              <p className="text-emerald-100 text-sm mt-2 leading-relaxed mb-3">{t('sidebar.upgrade.desc')}</p>
-              <Link href="/plans">
-                <Button className="w-full bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg text-sm font-semibold transition-colors border-0 shadow-sm mt-2">
-                  Upgrade
-                </Button>
-              </Link>
+          <div className="bg-slate-900 rounded-2xl p-4 text-white">
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-[10px] font-bold premium-pill px-2 py-0.5 rounded uppercase">Premium</span>
             </div>
-            <div className="absolute -right-4 -bottom-4 opacity-10 pointer-events-none">
-              <svg className="w-32 h-32" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15h-2v-6h2v6zm0-8h-2V7h2v2zm4 8h-2V7h2v10z"/></svg>
-            </div>
+            <p className="text-sm text-slate-400 mb-3">{t('sidebar.upgrade.desc')}</p>
+            <Link href="/plans">
+              <Button className="w-full bg-emerald-500 hover:bg-emerald-400 text-white rounded-lg text-sm font-semibold transition-colors border-0">
+                Upgrade
+              </Button>
+            </Link>
           </div>
           <button 
             onClick={logout}

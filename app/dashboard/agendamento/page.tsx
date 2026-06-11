@@ -1,7 +1,7 @@
 "use client";
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
-import { Bot, Calendar, Clock, CreditCard, CheckCircle2, User } from "lucide-react";
+import { Bot, Calendar, Clock, CreditCard, CheckCircle2, User, Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
@@ -32,14 +32,27 @@ export default function AgendamentoIAPage() {
     setTimeout(() => setStep(2), 1500);
   };
 
+  const [busca, setBusca] = useState("");
+
   return (
     <div className="max-w-4xl mx-auto space-y-6 pb-12">
-      <div className="mb-4">
-        <h1 className="text-2xl font-bold font-display text-slate-900 tracking-tight flex items-center gap-2">
-          <Calendar className="h-6 w-6 text-purple-600" />
-          Agendamento & Recepcionista IA
-        </h1>
-        <p className="text-slate-500">Converse com a assistente virtual para agendar e gerenciar suas consultas.</p>
+      <div className="mb-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+        <div>
+          <h1 className="text-2xl font-bold font-display text-slate-900 tracking-tight flex items-center gap-2">
+            <Calendar className="h-6 w-6 text-purple-600" />
+            Agendamento & Recepcionista IA
+          </h1>
+          <p className="text-slate-500">Converse com a assistente virtual para agendar e gerenciar suas consultas.</p>
+        </div>
+        <div className="relative w-full sm:w-72">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
+          <Input 
+            placeholder="Buscar consultas anteriores..." 
+            className="pl-9 bg-white"
+            value={busca}
+            onChange={(e) => setBusca(e.target.value)}
+          />
+        </div>
       </div>
 
       <div className="grid md:grid-cols-2 gap-6">

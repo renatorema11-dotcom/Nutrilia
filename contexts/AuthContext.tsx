@@ -100,6 +100,8 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
+let isRegisteringProcess = false;
+
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [isLoaded, setIsLoaded] = useState(false);
@@ -109,7 +111,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
       if (firebaseUser) {
-        await fetchProfile(firebaseUser.uid, firebaseUser.email || '');
+        if (!isRegisteringProcess) {
+           await fetchProfile(firebaseUser.uid, firebaseUser.email || '');
+        }
       } else {
         setUser(null);
         setIsLoaded(true);
@@ -128,14 +132,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       if (docSnap.exists()) {
         setUser({ ...(docSnap.data() as User), id, email });
       } else {
-        // Force the app to create a new profile by keeping user mapped with required data but not in DB yet
-        setUser({
-          id,
-          name: auth.currentUser?.displayName || email.split('@')[0],
-          email,
-          isOnboarded: false,
-          role: "user"
-        });
+        // USER INTENT: Se não houver paciente ou nutricionista no banco de dados, não haja nada.
+        console.warn("Acesso negado: Usuário inexistente no banco de dados.");
+        alert("Acesso negado: Seu perfil não foi encontrado no banco de dados. Por favor, certifique-se de realizar o cadastro corretamente.");
+        await signOut(auth);
+        setUser(null);
       }
     } catch (error) {
       handleFirestoreError(error, OperationType.GET, pathForGetDocs);
@@ -159,13 +160,26 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const loginWithGoogle = async () => {
     try {
+      isRegisteringProcess = true;
       const provider = new GoogleAuthProvider();
       provider.setCustomParameters({ prompt: 'select_account' });
-      await signInWithPopup(auth, provider);
+      const creds = await signInWithPopup(auth, provider);
+      
+      const docRef = doc(db, 'profiles', creds.user.uid);
+      const docSnap = await getDoc(docRef);
+      if (!docSnap.exists()) {
+         await setDoc(docRef, {
+           name: creds.user.displayName || creds.user.email?.split('@')[0] || 'Usuário',
+           email: creds.user.email,
+           isOnboarded: false,
+           role: "user"
+         });
+      }
+      
+      await fetchProfile(creds.user.uid, creds.user.email || '');
     } catch (error: any) {
       console.error("Google Login Error:", error);
       if (error.code === 'auth/popup-closed-by-user' || error.code === 'auth/cancelled-popup-request') {
-        // User closed the popup, silently ignore
         return;
       }
       if (error.code === 'auth/account-exists-with-different-credential') {
@@ -173,17 +187,32 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         return;
       }
       alert("Erro ao fazer login com Google: " + error.message);
+    } finally {
+      isRegisteringProcess = false;
     }
   };
 
   const loginWithFacebook = async () => {
     try {
+      isRegisteringProcess = true;
       const provider = new FacebookAuthProvider();
-      await signInWithPopup(auth, provider);
+      const creds = await signInWithPopup(auth, provider);
+      
+      const docRef = doc(db, 'profiles', creds.user.uid);
+      const docSnap = await getDoc(docRef);
+      if (!docSnap.exists()) {
+         await setDoc(docRef, {
+           name: creds.user.displayName || creds.user.email?.split('@')[0] || 'Usuário',
+           email: creds.user.email,
+           isOnboarded: false,
+           role: "user"
+         });
+      }
+      
+      await fetchProfile(creds.user.uid, creds.user.email || '');
     } catch (error: any) {
       console.error("Facebook Login Error:", error);
       if (error.code === 'auth/popup-closed-by-user' || error.code === 'auth/cancelled-popup-request') {
-        // User closed the popup, silently ignore
         return;
       }
       if (error.code === 'auth/account-exists-with-different-credential') {
@@ -191,29 +220,53 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         return;
       }
       alert("Erro ao fazer login com Facebook: " + error.message);
+    } finally {
+      isRegisteringProcess = false;
     }
   };
 
   const register = async (name: string, email: string, password?: string) => {
     try {
+      isRegisteringProcess = true;
       if (password) {
         const creds = await createUserWithEmailAndPassword(auth, email, password);
         await updateAuthProfile(creds.user, { displayName: name });
-        // We do not save to DB here; fetchProfile will fake the user state 
-        // until the onboarding is completed.
+        // Create in DB immediately
+        await setDoc(doc(db, 'profiles', creds.user.uid), {
+          name,
+          email,
+          isOnboarded: false,
+          role: "user"
+        });
+        await fetchProfile(creds.user.uid, email);
       } else {
         const provider = new GoogleAuthProvider();
         provider.setCustomParameters({ login_hint: email, prompt: 'select_account' });
-        await signInWithPopup(auth, provider);
+        const creds = await signInWithPopup(auth, provider);
+        
+        const docRef = doc(db, 'profiles', creds.user.uid);
+        const docSnap = await getDoc(docRef);
+        if (!docSnap.exists()) {
+           await setDoc(docRef, {
+             name: name || creds.user.displayName || email.split('@')[0],
+             email: creds.user.email,
+             isOnboarded: false,
+             role: "user"
+           });
+        }
+        await fetchProfile(creds.user.uid, creds.user.email || email);
       }
     } catch (error) {
       console.error(error);
       alert("Erro ao registrar: " + (error as Error).message);
+    } finally {
+      isRegisteringProcess = false;
     }
   };
 
   const registerNutricionista = async (name: string, email: string, crn: string, password?: string) => {
     try {
+      isRegisteringProcess = true;
       let userId = "";
       if (password) {
         const creds = await createUserWithEmailAndPassword(auth, email, password);
@@ -243,11 +296,14 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         role: "nutricionista",
         crn
       });
+      setIsLoaded(true);
       router.push("/dashboard-nutricionista");
 
     } catch (error) {
       console.error(error);
       alert("Erro ao registrar nutricionista: " + (error as Error).message);
+    } finally {
+      isRegisteringProcess = false;
     }
   };
 
